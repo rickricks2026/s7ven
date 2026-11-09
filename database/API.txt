@@ -1,0 +1,17 @@
+API DE LICENÇA
+POST https://SEU-DOMINIO/api/licenca.php
+Content-Type: application/x-www-form-urlencoded
+Campos: key=S7V-CHAVE_COMPLETA&domain=servidor.com.br
+
+200: {"valid":true,"product_id":1,"domain":"servidor.com.br","expires_at":"2027-01-31"}
+403: licença inválida/suspensa/vencida ou domínio divergente.
+429: limite de requisições por IP.
+HTTPS obrigatório fora de localhost. Não coloque a chave na query string.
+
+Integração do produto:
+1. Manter a chave somente em configuração de backend.
+2. Fazer POST via HTTPS com validação do certificado habilitada.
+3. Conferir valid, product_id esperado e domínio configurado no produto.
+4. Definir política de cache curto, prazo de tolerância e falha de rede.
+5. Tratar suspensão/expiração sem destruir dados do cliente.
+Não há código de verificação incorporado a um launcher ou template nesta entrega.

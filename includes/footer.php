@@ -1,0 +1,2 @@
+<?php if(!defined('S7VEN'))exit; ?>
+<footer><a class="logo" href="<?=e(url())?>">S<span>7</span>VEN</a><p>Desenvolvimento para quem vive MuOnline.</p><small>© <?=date('Y')?> <?=e(setting('company','S7VEN'))?></small><a href="<?=e(url('admin/index.php'))?>">Administração ↗</a><a href="<?=e(url('privacidade.php'))?>">Privacidade</a></footer><script src="<?=e(url('assets/app.js'))?>"></script></body></html>
