@@ -1,6 +1,5 @@
-// Configuração pública. Use somente a chave PUBLISHABLE (ou anon legada).
-// Nunca coloque secret, service_role, senhas ou credenciais de banco neste arquivo.
+// Somente configuração pública; permissões protegidas por RLS.
 window.S7VEN_CONFIG = Object.freeze({
-  supabaseUrl: '',
-  supabasePublishableKey: ''
+  supabaseUrl: 'https://mspzifregenjxdiwimrb.supabase.co',
+  supabasePublishableKey: 'sb_publishable_VJOeAJSpluq3M6aie6-F6Q_AKBPmI_Q'
 });
