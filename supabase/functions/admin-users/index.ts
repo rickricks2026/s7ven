@@ -2,8 +2,8 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.119.0';
 const url=Deno.env.get('SUPABASE_URL')!;
 const serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const site=(Deno.env.get('PUBLIC_SITE_URL')||'').replace(/\/$/,'');
-const allowed=(Deno.env.get('S7VEN_ALLOWED_ORIGINS')||site).split(',').map(x=>x.trim()).filter(Boolean);
+const site=(Deno.env.get('PUBLIC_SITE_URL')||'https://www.s7ven.pro').replace(/\/$/,'');
+const allowed=(Deno.env.get('S7VEN_ALLOWED_ORIGINS')||'https://www.s7ven.pro,https://s7ven.pro').split(',').map(x=>x.trim()).filter(Boolean);
 Deno.serve(async(req:Request)=>{
  const origin=req.headers.get('Origin')||'';
  const cors={'Access-Control-Allow-Origin':allowed.includes(origin)?origin:'null','Access-Control-Allow-Headers':'authorization, x-client-info, apikey, content-type','Access-Control-Allow-Methods':'POST, OPTIONS','Vary':'Origin'};
