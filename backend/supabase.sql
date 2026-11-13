@@ -209,3 +209,6 @@ commit;
 -- Depois de cadastrar e confirmar seu usuário, autorize o dono PELO SQL EDITOR:
 -- insert into public.app_admins(user_id) select id from auth.users where email='SEU_EMAIL';
 -- Nunca disponibilize esse comando como cadastro ou botão no frontend.
+
+-- Galeria do portfólio: até cinco imagens por publicação.
+create or replace function public.valid_content_images(urls text[]) returns boolean language sql immutable set search_path='' as $$ select cardinality(urls)<=5 and not exists(select 1 from unnest(urls) t(url) where url is null or length(url)>2048 or url !~ '^https://[^[:space:]]+$'); $$; revoke all on function public.valid_content_images(text[]) from public; grant execute on function public.valid_content_images(text[]) to anon,authenticated,service_role; alter table public.content add column images text[] not null default '{}'; alter table public.content add constraint content_images_valid check(public.valid_content_images(images)); update public.content set images=array[image_url] where image_url<>'';
