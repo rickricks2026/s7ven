@@ -111,7 +111,7 @@ async function renderCustomers(el){
  const users=[];let page=1,more=true;
  while(more){const {data,error}=await sb.functions.invoke('admin-users',{body:{action:'list',page}});if(error||data?.error)throw Error('accounts');users.push(...data.users);more=data.hasMore;page++;}
  const [{data:profiles,error:pe},{data:admins,error:ae}]=await Promise.all([sb.from('profiles').select('*'),sb.from('app_admins').select('user_id')]);if(pe||ae)throw pe||ae;
- const rows=users.map(u=>({...u,profile:profiles.find(p=>p.id===u.id),isAdmin:admins.some(x=>x.user_id===u.id)})).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+ const rows=users.map(u=>({...u,profile:profiles.find(p=>p.id===u.id),isAdmin:u.isAdmin||admins.some(x=>x.user_id===u.id)})).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
  $('#accounts-loading').remove();
  el.insertAdjacentHTML('beforeend',`<div class="panel-card"><div class="form-grid"><label>Pesquisar cadastros<input id="account-search" type="search" placeholder="Nome, e-mail ou ID da conta"></label><label>Situação<select id="account-status"><option value="all">Todas as contas</option><option value="active">Ativas</option><option value="blocked">Bloqueadas</option><option value="pending">E-mail pendente</option><option value="admin">Administradores</option></select></label></div><p id="account-count" role="status"></p></div><div id="account-results"></div>`);
  let index=1;
