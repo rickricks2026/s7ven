@@ -21,8 +21,8 @@ Deno.serve(async(req:Request)=>{
   const size=Number(req.headers.get('content-length')||0);if(size>8192)return send(413,{error:'Requisição muito grande.'});
   const body=await req.json();const action=body.action;
   if(action==='list'){
-   const page=Math.max(1,Math.min(100,Number(body.page)||1));const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;
-   return send(200,{users:data.users.map(u=>({id:u.id,email:u.email,name:u.user_metadata?.display_name||'',blocked:Boolean(u.banned_until&&new Date(u.banned_until)>new Date()),created_at:u.created_at})),page,hasMore:data.users.length===100});
+   const page=Math.max(1,Math.min(100000,Math.floor(Number(body.page)||1)));const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;
+   return send(200,{users:data.users.map(u=>({id:u.id,email:u.email,name:u.user_metadata?.display_name||'',blocked:Boolean(u.banned_until&&new Date(u.banned_until)>new Date()),created_at:u.created_at,updated_at:u.updated_at,email_confirmed_at:u.email_confirmed_at,last_sign_in_at:u.last_sign_in_at,phone:u.phone||'',providers:u.app_metadata?.providers||[]})),page,hasMore:data.users.length===100});
   }
   const id=String(body.id||'');
   if(action==='create'){
